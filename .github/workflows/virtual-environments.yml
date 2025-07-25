@@ -37,6 +37,8 @@ jobs:
             rm -rf /lean-testenv && python -m venv /lean-testenv && . /lean-testenv/bin/activate && pip install --no-cache-dir lean==1.0.185 && deactivate && \
             # Run Virtual Environment Test
             dotnet test ./Tests/bin/Release/QuantConnect.Tests.dll --filter "FullyQualifiedName=QuantConnect.Tests.Python.PythonVirtualEnvironmentTests.AssertVirtualEnvironment" && \
+            # Run library import test, specifically for SSL
+            dotnet test ./Tests/bin/Release/QuantConnect.Tests.dll --filter "FullyQualifiedName=QuantConnect.Tests.Python.PythonLibraryLoader.ImportSsl" --blame-hang-timeout 120seconds --blame-crash && \
             # Run Python Package Tests
             dotnet test ./Tests/bin/Release/QuantConnect.Tests.dll --filter "FullyQualifiedName=QuantConnect.Tests.Python.PythonPackagesTests" --blame-hang-timeout 120seconds --blame-crash && \
             # Run StableBaselines Python Package Test
